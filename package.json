@@ -1,0 +1,17 @@
+{
+  "name": "node_express",
+  "version": "1.0.0",
+  "description": "Node.js rest api with express, sequilize, & postgresql",
+  "main": "server.js",
+  "author": "rizperdana",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.19",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.21.2"
+  }
+}
