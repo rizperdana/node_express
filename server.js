@@ -24,7 +24,7 @@ if (process.env.ENVIRONMENT == "production") {
     .catch((err) => {
       console.log("Failed to sync db, caused: " + err.message);
     });
-} else {
+} else if (process.env.ENVIRONMENT == "development") {
   db.sequelize.sync({ force: true }).then(() => {
     console.log("Drop and re-sync db.");
   })

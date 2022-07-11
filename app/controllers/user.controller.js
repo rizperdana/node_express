@@ -1,6 +1,7 @@
 const db = require("../models");
 const User = db.users;
 const Op = db.Sequelize.Op;
+const { getPagination, getPagingData } = require('./pagination.helper');
 
 // CREATE USER
 exports.create = (req, res) => {
@@ -30,17 +31,24 @@ exports.create = (req, res) => {
 
 // LIST USER
 exports.list = (req, res) => {
-  const email = req.query.email;
+  const { page, size, email } = req.query.email;
   var condition = email ? { email: { [Op.iLike]: `%${email}%` } } : null;
-  User.findAll({ where: condition })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message
-      });
+
+  const { limit, offset } = getPagination(page, size);
+
+  User.findAndCountAll(
+    {
+      where: condition, limit, offset
+    }
+  ).then(data => {
+    console.log(data)
+    const response = getPagingData(data, page, limit);
+    res.send(response);
+  }).catch(err => {
+    res.status(500).send({
+      message: err.message
     });
+  });
 };
 
 // GET USER
